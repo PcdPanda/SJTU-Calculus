@@ -1,0 +1,3 @@
+Conservative field的条件：
+region要simply connected
+

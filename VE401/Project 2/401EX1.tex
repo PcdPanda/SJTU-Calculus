@@ -1,0 +1,493 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumerate}
+\usepackage{natbib}
+\usepackage{float}%稳定图片位置
+\usepackage{graphicx}%画图
+\usepackage[english]{babel}
+\usepackage{a4wide}
+\usepackage{indentfirst}%缩进
+\usepackage{enumerate}%加序号
+\usepackage{multirow}%合并行
+\begin{document}
+\section{Q1}
+A mass shooting is  an incident involving multiple victims of firearms-related violence, and there is not a broadly accepted definition, for example, the United States'Congressional Research Service defines a "public mass shooting" as one in which four or more people selected indiscriminately, not including the perpetrator, are killed, and another unofficial definition of a mass shooting is an event involving the shooting(not necessarily resulting in death) of five or more people(sometimes four) with no "cooling-off period". And a mass murder is the act of murdering a number of people, typically simultaneously or over a relatively short period of time and in close geographic proximity, and FBI defines mass murder as murdering four or more persons during an event with no "cooling-off period" between murders.
+\par Since there is not a broadly accepted definition of mass shooting, in our project, we decide to use the definition of Gun Violence Archive(GVA), and actually, if you comparing with other statistical data, you will find the GVA mass shooting numbers are higher than some other sources. Because GVA uses a purely statistical threshold to define mass shooting based ONLY on the numeric value of 4 or more shot or killed, not including the shooter. And GVA does not parse the definition to remove any subcategory of shooting, that means GVA does not exclude, set apart, caveat, or differentiate victims based upon the circumstances in which they were shot.
+\section{Q2}
+In order to find out whether we can predict how many days during which there are no mass shooting, one mass shooting and so on, we use the data from GVA and get the number of mass shootings that happened in each day between January 1st, 2013 and December 31st, 2017:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Numbers of mass shootings each day & numbers of days \\ \hline
+0 & 886 \\ \hline
+1 & 540 \\ \hline
+2 & 240 \\ \hline
+3 & 102 \\ \hline
+4 & 37  \\ \hline
+5 & 15  \\ \hline
+6 & 6   \\ \hline
+\end{tabular}
+\caption{Observed number of days with number of mass shootings from years 2013 to 2017}
+\end{table}
+\par The total mass shootings number is $540+240\times2+102\times3+37\times4+15\times5+6\times6=1585$. Now if the number of mass shootings follows poisson distribution, then the estimator for $k$ can be represent as below:
+\begin{center}
+$\hat k=\overline X=\dfrac{1585}{1826} \approx0.868$
+\end{center}
+\par Then we first calculate:
+\begin{center}
+$P[X=0]=\dfrac{e^{\hat k}\hat k^0}{0!} \approx0.41981$\\
+$P[X=1]=\dfrac{e^{\hat k}\hat k^1}{1!} \approx0.36442$\\
+$P[X=2]=\dfrac{e^{\hat k}\hat k^2}{2!} \approx0.15810$\\
+$P[X=3]=\dfrac{e^{\hat k}\hat k^3}{3!} \approx0.04581$\\
+$P[X=4]=\dfrac{e^{\hat k}\hat k^4}{4!} \approx0.00993$\\
+$P[X=5]=\dfrac{e^{\hat k}\hat k^5}{5!} \approx0.00172$\\
+$P[X\geq6]=1-P[X=0]-P[X=1]-P[X=2]-P[X=3]-P[X=4]-P[X=5]$\\
+$=0.00025$
+\end{center}
+\par We can then replace the distribution of $X$ with that of a categorical random variable with parameters:
+\begin{center}
+$(p_0,p_1,p_2,p_3,p_5,p_6)=(0.41981,0.36442,0.15810,0.04581,0.00993,0.00172,0.00025)$
+\end{center}
+\par We then can calculate the expected frequencies $E_i=np_i$ with $n=1826$ as follows:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Category i & Expected Frequency $E_i$ & Observed Frequency $Q_i$ \\ \hline
+0 & 766.57 & 886\\ \hline
+1 & 665.43 & 540\\ \hline
+2 & 288.69 & 240\\ \hline
+3 & 83.65  & 102\\ \hline
+4 & 18.13  &  37\\ \hline
+5 & 3.14   &  15\\ \hline
+6 & 0.4565 &  6 \\ \hline
+\end{tabular}
+\caption{Observed number of days and expected number of days with number of mass shootings from years 2013 to 2017}
+\end{table}
+\par However, if we cannot apply Pearson's test here, since our data doesn't satisfy the first criteria: $E[X_i]=np_i\geq1$ for all $i=1,...,k$.
+\par The problem can be solved by combining the last two categories:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Category i & Expected Frequency $E_i$ & Observed Frequency $Q_i$ \\ \hline
+0 & 766.57 & 886\\ \hline
+1 & 665.43 & 540\\ \hline
+2 & 288.69 & 240\\ \hline
+3 & 83.65  & 102\\ \hline
+4 & 18.13  &  37\\ \hline
+5 & 3.60   &  21\\ \hline
+\end{tabular}
+\caption{Observed number of days and expected number of days with number of mass shootings from years 2013 to 2017}
+\end{table}
+Then let us test:
+\begin{center}
+$H_0$: The number of mass shootings happened in one day in United States follows a Poisson distribution with parameter $k=0.868$.
+\end{center}
+\par For $n=6$ categories, the statistic:
+\begin{equation*}
+X^2=\sum_{i=0}^{n-1}\dfrac{(O_i-E_i)^2}{E_i}
+\end{equation*}
+\par follows a chi-squared distribution with $n-1-m=4$ degrees of freedom. We testing the hypothesis at $\alpha=0.05$ and we will reject $H_0$ if $X^2\geq x_{0.05,4}=9.49$. Since we have:
+\begin{center}
+$X^2=\dfrac{(886-766.57)^2}{766.57}+\dfrac{(540-665.43)^2}{665.43}+\dfrac{(240-288.69)^2}{288.69}$\\
+$+\dfrac{(102-83.65)^2}{83.65}+\dfrac{(37-18.13)^2}{18.13}+\dfrac{(21-3.60)^2}{3.60}\approx158.23$
+\end{center}
+\par Since $X^2\geq x_{0.05,4}$, we can reject $H_0$, which means there is no evidence that the number of mass shootings happened in one day in United States follows a Poisson distribution with parameter $k=0.868$.\\
+
+
+\par Now, if we test the individual years for adherence to a Poisson distribution, what will we get?
+\par First, we test the data for year 2013:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Numbers of mass shooting each day & numbers of days \\ \hline
+0 & 198 \\ \hline
+1 & 105 \\ \hline
+2 & 47 \\ \hline
+3 & 8 \\ \hline
+4 & 6  \\ \hline
+5 & 1  \\ \hline
+\end{tabular}
+\caption{Observed number of days with number of mass shootings in year 2013}
+\end{table}
+\par The total mass shootings number is $105+47\times2+8\times3+6\times4+1\times5=252$. Now if the number of mass shootings follows poisson distribution, then the estimator for $k$ can be represent as below:
+\begin{center}
+$\hat k=\overline X=\dfrac{252}{365} \approx0.6904$
+\end{center}
+\par Then we first calculate:
+\begin{center}
+$P[X=0]=\dfrac{e^{\hat k}\hat k^0}{0!} \approx0.50137$\\
+$P[X=1]=\dfrac{e^{\hat k}\hat k^1}{1!} \approx0.34615$\\
+$P[X=2]=\dfrac{e^{\hat k}\hat k^2}{2!} \approx0.11949$\\
+$P[X=3]=\dfrac{e^{\hat k}\hat k^3}{3!} \approx0.02750$\\
+$P[X=4]=\dfrac{e^{\hat k}\hat k^4}{4!} \approx0.00475$\\
+$P[X\geq5]=1-P[X=0]-P[X=1]-P[X=2]-P[X=3]-P[X=4]$\\
+$=0.00074$
+\end{center}
+\par We can then replace the distribution of $X$ with that of a categorical random variable with parameters:
+\begin{center}
+$(p_0,p_1,p_2,p_3,p_5)=(0.50137,0.34615,0.11949,0.02750,0.00475,0.00074)$
+\end{center}
+\par We then can calculate the expected frequencies $E_i=np_i$ with $n=365$ as follows:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Category i & Expected Frequency $E_i$ & Observed Frequency $Q_i$ \\ \hline
+0 & 183.00 & 198\\ \hline
+1 & 126.34 & 105\\ \hline
+2 & 43.61 & 47\\ \hline
+3 & 10.04  & 8\\ \hline
+4 & 1.73  &  6\\ \hline
+5 & 0.27   &  1\\ \hline
+\end{tabular}
+\caption{Observed number of days and expected number of days with number of mass shootings in year 2013}
+\end{table}
+\par However, if we cannot apply Pearson's test here, since our data doesn't satisfy the first criteria: $E[X_i]=np_i\geq1$ for all $i=1,...,k$.
+\par The problem can be solved by combining the last two categories:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Category i & Expected Frequency $E_i$ & Observed Frequency $Q_i$ \\ \hline
+0 & 183.00 & 198\\ \hline
+1 & 126.34 & 105\\ \hline
+2 & 43.61 & 47\\ \hline
+3 & 10.04  & 8\\ \hline
+4 & 2.00  &  7\\ \hline
+\end{tabular}
+\caption{Observed number of days and expected number of days with number of mass shootings in year 2013}
+\end{table}
+\par For $n=5$ categories, the statistic:
+\begin{equation*}
+X^2=\sum_{i=0}^{n-1}\dfrac{(O_i-E_i)^2}{E_i}
+\end{equation*}
+\par follows a chi-squared distribution with $n-1-m=3$ degrees of freedom.
+\begin{center}
+$X^2=\dfrac{(198-183.00)^2}{183.00}+\dfrac{(105-126.34)^2}{126.34}+\dfrac{(47-43.61)^2}{43.61}$\\
+$+\dfrac{(8-10.04)^2}{10.04}+\dfrac{(7-2)^2}{2}\approx18.01$
+\end{center}
+\par So the P value of our test for year 2013 is 0.000438, it's quite small.\\
+
+
+\par Then, let's test the data for year 2014:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Numbers of mass shooting each day & numbers of days \\ \hline
+0 & 194 \\ \hline
+1 & 103 \\ \hline
+2 & 45 \\ \hline
+3 & 18 \\ \hline
+4 & 3  \\ \hline
+5 & 1  \\ \hline
+6 & 1  \\ \hline
+\end{tabular}
+\caption{Observed number of days with number of mass shootings in year 2014}
+\end{table}
+\par The total mass shootings number is $103+45\times2+18\times3+3\times4+1\times5+1\times6=270$. Now if the number of mass shootings follows poisson distribution, then the estimator for $k$ can be represent as below:
+\begin{center}
+$\hat k=\overline X=\dfrac{270}{365} \approx0.7397$
+\end{center}
+\par Then we first calculate:
+\begin{center}
+$P[X=0]=\dfrac{e^{\hat k}\hat k^0}{0!} \approx0.47724$\\
+$P[X=1]=\dfrac{e^{\hat k}\hat k^1}{1!} \approx0.35303$\\
+$P[X=2]=\dfrac{e^{\hat k}\hat k^2}{2!} \approx0.13057$\\
+$P[X=3]=\dfrac{e^{\hat k}\hat k^3}{3!} \approx0.03220$\\
+$P[X=4]=\dfrac{e^{\hat k}\hat k^4}{4!} \approx0.00595$\\
+$P[X=5]=\dfrac{e^{\hat k}\hat k^5}{5!} \approx0.00088$\\
+$P[X\geq6]=1-P[X=0]-P[X=1]-P[X=2]-P[X=3]-P[X=4]-P[X=5]$\\
+$=0.00013$
+\end{center}
+\par We can then replace the distribution of $X$ with that of a categorical random variable with parameters:
+\begin{center}
+$(p_0,p_1,p_2,p_3,p_5,p_6)=(0.47724,0.35303,0.13057,0.03220,0.00595,0.00088,0.00013)$
+\end{center}
+\par We then can calculate the expected frequencies $E_i=np_i$ with $n=365$ as follows:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Category i & Expected Frequency $E_i$ & Observed Frequency $Q_i$ \\ \hline
+0 & 174.19 & 194\\ \hline
+1 & 128.86 & 103\\ \hline
+2 & 47.66 & 45\\ \hline
+3 & 11.75  & 18\\ \hline
+4 & 2.17 &  3\\ \hline
+5 & 0.32 &  1\\ \hline
+6 & 0.05  & 1\\ \hline
+\end{tabular}
+\caption{Observed number of days and expected number of days with number of mass shootings in year 2014}
+\end{table}
+\par However, if we cannot apply Pearson's test here, since our data doesn't satisfy the first criteria: $E[X_i]=np_i\geq1$ for all $i=1,...,k$.
+\par The problem can be solved by combining the last three categories:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Category i & Expected Frequency $E_i$ & Observed Frequency $Q_i$ \\ \hline
+0 & 174.19 & 194\\ \hline
+1 & 128.86 & 103\\ \hline
+2 & 47.66 & 45\\ \hline
+3 & 11.75  & 18\\ \hline
+4 & 2.54 &  5\\ \hline
+\end{tabular}
+\caption{Observed number of days and expected number of days with number of mass shootings in year 2014}
+\end{table}
+\par For $n=5$ categories, the statistic:
+\begin{equation*}
+X^2=\sum_{i=0}^{n-1}\dfrac{(O_i-E_i)^2}{E_i}
+\end{equation*}
+\par follows a chi-squared distribution with $n-1-m=3$ degrees of freedom.
+\begin{center}
+$X^2=\dfrac{(194-174.19)^2}{174.19}+\dfrac{(103-128.86)^2}{128.86}+\dfrac{(45-47.66)^2}{47.66}$\\
+$+\dfrac{(18-11.75)^2}{11.75}+\dfrac{(5-2.54)^2}{2.54}\approx13.30$
+\end{center}
+\par The P value of our test for year 2014 is 0.004031, it's also quite small.\\
+
+
+\par Then, let's test the data for year 2015:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Numbers of mass shooting each day & numbers of days \\ \hline
+0 & 164 \\ \hline
+1 & 124 \\ \hline
+2 & 42\\ \hline
+3 & 21 \\ \hline
+4 & 7  \\ \hline
+5 & 6  \\ \hline
+6 & 1  \\ \hline
+\end{tabular}
+\caption{Observed number of days with number of mass shootings in year 2015}
+\end{table}
+\par The total mass shootings number is $124+42\times2+21\times3+7\times4+6\times5+1\times6=335$. Now if the number of mass shootings follows poisson distribution, then the estimator for $k$ can be represent as below:
+\begin{center}
+$\hat k=\overline X=\dfrac{335}{365} \approx0.9178$
+\end{center}
+\par Then we first calculate:
+\begin{center}
+$P[X=0]=\dfrac{e^{\hat k}\hat k^0}{0!} \approx0.39939$\\
+$P[X=1]=\dfrac{e^{\hat k}\hat k^1}{1!} \approx0.36657$\\
+$P[X=2]=\dfrac{e^{\hat k}\hat k^2}{2!} \approx0.16822$\\
+$P[X=3]=\dfrac{e^{\hat k}\hat k^3}{3!} \approx0.05146$\\
+$P[X=4]=\dfrac{e^{\hat k}\hat k^4}{4!} \approx0.01181$\\
+$P[X=5]=\dfrac{e^{\hat k}\hat k^5}{5!} \approx0.00217$\\
+$P[X\geq6]=1-P[X=0]-P[X=1]-P[X=2]-P[X=3]-P[X=4]-P[X=5]$\\
+$=0.00038$
+\end{center}
+\par We can then replace the distribution of $X$ with that of a categorical random variable with parameters:
+\begin{center}
+$(p_0,p_1,p_2,p_3,p_5,p_6)=(0.39939,0.36657,0.16822,0.05146,0.01181,0.00217,0.00038)$
+\end{center}
+\par We then can calculate the expected frequencies $E_i=np_i$ with $n=365$ as follows:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Category i & Expected Frequency $E_i$ & Observed Frequency $Q_i$ \\ \hline
+0 & 145.78 & 164\\ \hline
+1 & 133.80 & 124\\ \hline
+2 & 61.40 & 42\\ \hline
+3 & 18.78 & 21\\ \hline
+4 & 4.31 &  7\\ \hline
+5 & 0.79 &  6\\ \hline
+6 & 0.14  & 1\\ \hline
+\end{tabular}
+\caption{Observed number of days and expected number of days with number of mass shootings in year 2015}
+\end{table}
+\par However, if we cannot apply Pearson's test here, since our data doesn't satisfy the first criteria: $E[X_i]=np_i\geq1$ for all $i=1,...,k$.
+\par The problem can be solved by combining the last three categories:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Category i & Expected Frequency $E_i$ & Observed Frequency $Q_i$ \\ \hline
+0 & 145.78 & 164\\ \hline
+1 & 133.80 & 124\\ \hline
+2 & 61.40 & 42\\ \hline
+3 & 18.78 & 21\\ \hline
+4 & 5.24 &  14\\ \hline
+\end{tabular}
+\caption{Observed number of days and expected number of days with number of mass shootings in year 2015}
+\end{table}
+\par For $n=5$ categories, the statistic:
+\begin{equation*}
+X^2=\sum_{i=0}^{n-1}\dfrac{(O_i-E_i)^2}{E_i}
+\end{equation*}
+\par follows a chi-squared distribution with $n-1-m=3$ degrees of freedom.
+\begin{center}
+$X^2=\dfrac{(164-145.78)^2}{145.78}+\dfrac{(124-133.80)^2}{133.80}+\dfrac{(42-61.40)^2}{61.40}$\\
+$+\dfrac{(21-18.78)^2}{18.78}+\dfrac{(14-5.24)^2}{5.24}\approx24.03$
+\end{center}
+\par The P value of our test for year 2015 is $2.46\times10^{-5}$, it's too small.\\
+
+
+\par Then, let's test the data for year 2016:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Numbers of mass shooting each day & numbers of days \\ \hline
+0 & 165 \\ \hline
+1 & 98 \\ \hline
+2 & 55\\ \hline
+3 & 28 \\ \hline
+4 & 12  \\ \hline
+5 & 6  \\ \hline
+6 & 2  \\ \hline
+\end{tabular}
+\caption{Observed number of days with number of mass shootings in year 2016}
+\end{table}
+\par The total mass shootings number is $98+55\times2+28\times3+12\times4+6\times5+2\times6=382$. Now if the number of mass shootings follows poisson distribution, then the estimator for $k$ can be represent as below:
+\begin{center}
+$\hat k=\overline X=\dfrac{382}{365} \approx1.047$
+\end{center}
+\par Then we first calculate:
+\begin{center}
+$P[X=0]=\dfrac{e^{\hat k}\hat k^0}{0!} \approx0.35114$\\
+$P[X=1]=\dfrac{e^{\hat k}\hat k^1}{1!} \approx0.36749$\\
+$P[X=2]=\dfrac{e^{\hat k}\hat k^2}{2!} \approx0.19230$\\
+$P[X=3]=\dfrac{e^{\hat k}\hat k^3}{3!} \approx0.06709$\\
+$P[X=4]=\dfrac{e^{\hat k}\hat k^4}{4!} \approx0.01755$\\
+$P[X=5]=\dfrac{e^{\hat k}\hat k^5}{5!} \approx0.00367$\\
+$P[X\geq6]=1-P[X=0]-P[X=1]-P[X=2]-P[X=3]-P[X=4]-P[X=5]$\\
+$=0.00076$
+\end{center}
+\par We can then replace the distribution of $X$ with that of a categorical random variable with parameters:
+\begin{center}
+$(p_0,p_1,p_2,p_3,p_5,p_6)=(0.35114,0.36749,0.198230,0.06709,0.01755,0.00367,0.00076)$
+\end{center}
+\par We then can calculate the expected frequencies $E_i=np_i$ with $n=365$ as follows:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Category i & Expected Frequency $E_i$ & Observed Frequency $Q_i$ \\ \hline
+0 & 128.17 & 165\\ \hline
+1 & 134.13 & 98\\ \hline
+2 & 70.19 & 55\\ \hline
+3 & 24.49 & 28\\ \hline
+4 & 6.41 &  12\\ \hline
+5 & 1.34 &  6\\ \hline
+6 & 0.28  & 2\\ \hline
+\end{tabular}
+\caption{Observed number of days and expected number of days with number of mass shootings in year 2016}
+\end{table}
+\par However, if we cannot apply Pearson's test here, since our data doesn't satisfy the first criteria: $E[X_i]=np_i\geq1$ for all $i=1,...,k$.
+\par The problem can be solved by combining the last two categories:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Category i & Expected Frequency $E_i$ & Observed Frequency $Q_i$ \\ \hline
+0 & 128.17 & 165\\ \hline
+1 & 134.13 & 98\\ \hline
+2 & 70.19 & 55\\ \hline
+3 & 24.49 & 28\\ \hline
+4 & 6.41 &  12\\ \hline
+5 & 1.62 &  8\\ \hline
+\end{tabular}
+\caption{Observed number of days and expected number of days with number of mass shootings in year 2016}
+\end{table}
+\par For $n=6$ categories, the statistic:
+\begin{equation*}
+X^2=\sum_{i=0}^{n-1}\dfrac{(O_i-E_i)^2}{E_i}
+\end{equation*}
+\par follows a chi-squared distribution with $n-1-m=4$ degrees of freedom.
+\begin{center}
+$X^2=\dfrac{(165-128.17)^2}{128.17}+\dfrac{(98-134.13)^2}{134.13}+\dfrac{(55-70.19)^2}{70.19}$\\
+$+\dfrac{(28-24.49)^2}{24.49}+\dfrac{(12-6.41)^2}{6.41}+\dfrac{(8-1.64)^2}{1.64}\approx53.65$
+\end{center}
+\par The P value of our test for year 2016 is $6.23\times 10^{-11}$. It's too small.\\
+
+
+\par Then, let's test the data for year 2017:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+Numbers of mass shooting each day & numbers of days \\ \hline
+0 & 165 \\ \hline
+1 & 110 \\ \hline
+2 & 51\\ \hline
+3 & 27 \\ \hline
+4 & 9  \\ \hline
+5 & 1  \\ \hline
+6 & 2  \\ \hline
+\end{tabular}
+\caption{Observed number of days with number of mass shootings in year 2017}
+\end{table}
+\par The total mass shootings number is $110+51\times2+27\times3+9\times4+1\times5+2\times6=346$. Now if the number of mass shootings follows poisson distribution, then the estimator for $k$ can be represent as below:
+\begin{center}
+$\hat k=\overline X=\dfrac{346}{365} \approx0.9479$
+\end{center}
+\par Then we first calculate:
+\begin{center}
+$P[X=0]=\dfrac{e^{\hat k}\hat k^0}{0!} \approx0.38754$\\
+$P[X=1]=\dfrac{e^{\hat k}\hat k^1}{1!} \approx0.36736$\\
+$P[X=2]=\dfrac{e^{\hat k}\hat k^2}{2!} \approx0.17412$\\
+$P[X=3]=\dfrac{e^{\hat k}\hat k^3}{3!} \approx0.05502$\\
+$P[X=4]=\dfrac{e^{\hat k}\hat k^4}{4!} \approx0.01304$\\
+$P[X=5]=\dfrac{e^{\hat k}\hat k^5}{5!} \approx0.00247$\\
+$P[X\geq6]=1-P[X=0]-P[X=1]-P[X=2]-P[X=3]-P[X=4]-P[X=5]$\\
+$=0.00045$
+\end{center}
+\par We can then replace the distribution of $X$ with that of a categorical random variable with parameters:
+\begin{center}
+$(p_0,p_1,p_2,p_3,p_5,p_6)=(0.38754,0.36736,0.17412,0.05502,0.01304,0.00247,0.00045)$
+\end{center}
+\par We then can calculate the expected frequencies $E_i=np_i$ with $n=365$ as follows:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Category i & Expected Frequency $E_i$ & Observed Frequency $Q_i$ \\ \hline
+0 & 141.45 & 165\\ \hline
+1 & 134.09 & 110\\ \hline
+2 & 63.55 & 51\\ \hline
+3 & 20.08 & 27\\ \hline
+4 & 4.76 &  9\\ \hline
+5 & 0.90 &  1\\ \hline
+6 & 0.16  & 2\\ \hline
+\end{tabular}
+\caption{Observed number of days and expected number of days with number of mass shootings in year 2017}
+\end{table}
+\par However, if we cannot apply Pearson's test here, since our data doesn't satisfy the first criteria: $E[X_i]=np_i\geq1$ for all $i=1,...,k$.
+\par The problem can be solved by combining the last two categories:
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Category i & Expected Frequency $E_i$ & Observed Frequency $Q_i$ \\ \hline
+0 & 141.45 & 165\\ \hline
+1 & 134.09 & 110\\ \hline
+2 & 63.55 & 51\\ \hline
+3 & 20.08 & 27\\ \hline
+4 & 4.76 &  9\\ \hline
+5 & 1.06 &  3\\ \hline
+\end{tabular}
+\caption{Observed number of days and expected number of days with number of mass shootings in year 2017}
+\end{table}
+\par For $n=6$ categories, the statistic:
+\begin{equation*}
+X^2=\sum_{i=0}^{n-1}\dfrac{(O_i-E_i)^2}{E_i}
+\end{equation*}
+\par follows a chi-squared distribution with $n-1-m=4$ degrees of freedom.
+\begin{center}
+$X^2=\dfrac{(165-141.45)^2}{141.45}+\dfrac{(110-134.09)^2}{134.09}+\dfrac{(51-63.55)^2}{63.55}$\\
+$+\dfrac{(27-20.08)^2}{20.08}+\dfrac{(9-4.76)^2}{4.76}+\dfrac{(3-1.06)^2}{1.06}\approx20.44$
+\end{center}
+\par The P value of our test for year 2017 is 0.00041, it's quite small.\\
+
+
+\par Since the P values of test for year 2013, 2014, 2015, 2016 and 2017 are 0.000438, 0.004031, $2.46\times10^{-5}$, $6.23\times 10^{-11}$ and 0.00041, so actually there is evidence that  even for individual year, the numbers of mass shootings happened each day may not follows poisson distribution. But we found the P value of individual year is much larger than the P value of years from 2013 to 2017. So I guess that the numbers of mass shootings happened in one day follows a poisson distribution only in a short time period, like a month, or a week, that means the parameter $k$ of the poisson distribution may be different from month to month, week to week, so for a longer time period, since the parameter $k$ of the poisson distribution is changing, it's impossible for us to determine a single parameter $k$ for a long period. To see this, we continue our analysis.
+\end{document}

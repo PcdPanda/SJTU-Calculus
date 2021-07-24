@@ -1,0 +1,97 @@
+\documentclass[english]{article}
+\usepackage{geometry}
+\usepackage{indentfirst}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{babel}
+\usepackage{listings}
+\usepackage{subfigure}
+\usepackage{caption}
+\usepackage{pgfplots}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[section]{placeins}
+\usepackage{subfigure}
+\usepackage{textcomp}
+\usepackage[normalem]{ulem}
+\usepackage[version=4]{mhchem}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{color}
+\usepackage{setspace}%
+\usepackage[colorlinks,
+            linkcolor=black,
+            anchorcolor=blue,
+            citecolor=green
+            ]{hyperref}
+\begin{document}
+\noindent vii) Sol: Based on the method of maximum likelihood, we use $\bar X \ $to serve as the estimator $\hat {k}$ for $k$, which is proved in the lecture slide. As one essential assumption for a Poisson distribution is that ``the number of `arrivals' during non-overlapping time intervals are independent'', we can know that
+\begin{equation*}
+E[\bar X]=k, Var \bar X=k/n.
+\end{equation*} 
+\par In our case, the sample size is large enough for us to reasonably assume that $\bar X$ follows a normal distribution with $E[\bar X]=k, Var \bar X=k/n$. Accordingly, the statistic $Z=\frac{\bar X-k}{\sqrt{k/n}}$ follows a standard normal distribution. It follows that a $100(1-\alpha)\%$ confidence interval for k is
+\begin{equation*}
+\bar X \pm z_{\alpha/2} \sqrt{k/n}
+\end{equation*}
+which is identical to the form that
+\begin{equation*}
+\hat k \pm z_{\alpha/2} \sqrt{k/n}
+\end{equation*}
+\par Nevertheless, the confidence interval depends on the parameter $k$ we hope to estimate. We can solve this problem by replacing $k$ by $\hat k$ and the interval becomes
+\begin{equation*}
+\hat k \pm z_{\alpha/2} \sqrt{\hat k/n}
+\end{equation*}
+In this way, we actually replace $\sigma $ by $S$, so we need to change $z_{\alpha/2}$ to $t_{\alpha/2}$. Notwithstanding, considering that our sample size is large enough for the central limit theorem to hold, it is rational for us to neglect the very subtle difference between $z_{\alpha/2}$ and $t_{\alpha/2}$ so that our solution can be simplified.
+\par Using the weekly data of the years 2013 to 2017, we have can know that there are 262 weeks and the total number of mass shootings is 1585. Thus, we have:
+\begin{equation*}
+\hat k \pm z_{\alpha/2} \sqrt{\hat k/n}=[ 5.75,6.35 ].
+\end{equation*}
+\par \qed
+
+\noindent viii) Sol: Using the weekly data of January to June 2018, we can know that there are 26 weeks and the total number of mass shootings is 157 in that period. Hence, the estimate for $k$ is $\hat{k}_{2018}=\bar X=157/26=6.04$, which falls into the confidence interval calculated above. The data are shown in the following table:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\# Mass Shootings & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+Observed Frequency & 0 & 1 & 3 & 1 & 4 & 7 & 2 & 0 & 3 \\ \hline
+\# Mass Shootings & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & 17 \\ \hline
+Observed Frequency & 0 & 2  & 1  & 1  & 0  & 0  & 0  & 0  & 1 \\ \hline
+\end{tabular}
+\end{center}
+\par We can calculate the corresponding expected frequencies by $E_{x}=nP[X=x]=n\frac{e^{\hat k}\hat k^x}{x!}$:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\# Mass Shootings &0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+Expected Frequency & 0.06 & 0.38 & 1.13 & 2.28 & 3.44 & 4.15 & 4.18 & 3.60 & 2.72\\ \hline
+\# Mass Shootings & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16 & $\geq$ 17 \\ \hline
+Expected Frequency  & 1.82 & 1.10  & 0.60  & 0.30  & 0.14  & 0.06  & 0.02  & 0.01  & 0.01\\ \hline
+\end{tabular}
+\end{center}
+\par To satisfy the two criteria of the Pearson statistic, we need to rearrange our observed and expected frequencies by combining adjacent categories. However, the maximum number of categories is only 3 (if there are 4 categories, no way of division will be appropriate). The revised table is shown as follows:
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+Mass-Shooting Category $i$ & [0,4] & [5,7] & [8,$+\infty$) \\ \hline
+Observed Frequency $O_i$ & 9 & 9 & 8 \\ \hline
+Expected Frequency $E_i$ & 7.29 & 11.93 & 6.78 \\ \hline
+\end{tabular}
+\end{center}
+\par We need to test the null hypothesis
+$H_0$: the weekly number of mass shootings follows a Poisson distribution with the parameter $k=6.04$. 
+\par This is in equivalence to the test $H_0$: the weekly number of mass shootings follows a categorical distribution with parameters $(\frac{7.29}{26},\frac{11.93}{26},\frac{6.78}{26})$.
+For $N=3$ categories, the statistic 
+\begin{equation*}
+X^2=\sum_{i=1}^{N}\frac{(O_i-E_i)^2}{E_i}
+\end{equation*}
+follows a chi-squared distribution with $N-1-m=1$ degree of freedom. Let $\alpha=0.05$, and we will reject $H_0$ if $X^2>\chi^2_{0.05,1}=3.84$. We have:
+\begin{equation*}
+X^2=\frac{(9-7.29)^2}{7.29}+\frac{(9-11.93)^2}{11.93}+\frac{(8-6.78)^2}{6.78}=1.34<3.84=\chi^2_{0.05,1}
+\end{equation*}
+Hence, we fail to reject $H_0$ at the $5\%$ level of significance. There is no evidence that the weekly data of January to June 2018 do not follow a Poisson distribution. 
+\par \qed
+\end{document}
