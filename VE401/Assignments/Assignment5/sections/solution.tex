@@ -1,0 +1,166 @@
+\section*{Exercise 5.1}
+We know that $\bar{x}=26.035$, $s=4.78476$. Here the null hypothesis is
+\spl{
+    H_0:\ \mu\leq25.
+}
+
+Hence,
+\spl{
+    &P[\overline{X}\geq\overline{x}\big|\mu\leq25]\leq P[\overline{X}\geq\overline{x}\big|\mu=25]\\
+    =&P[\frac{\bar{X}-25}{s/\sqrt{n}}\geq\frac{26.035-25}{s/\sqrt{n}}]\\
+    =&P[T_{19}\geq\frac{26.035-25}{4.78476}]\\
+    =&P[T_{19}\geq0.97]\\
+    \approx&0.17>0.05.
+}
+
+If we set $\alpha=0.05$, then $t_{0.05}(19)=1.729$.
+
+We can reject $H_0$ if $t=0.97>t_{0.05}(19)$ but we fail, which means we say that we have no significant evidence to reject that $\mu\leq25$. Hence, we support the claim. The P-value is approximately 0.17.
+
+\section*{Exercise 5.2}
+\enum{
+\item
+We denote that $Z=\frac{\overline{X}-\mu_0}{\sigma/\sqrt{n}}$.
+\spl{
+    \alpha&=P[\text{reject }H_0\big|H_0 \text{ true}]\\
+    &=P[\overline{X}\geq\overline{x}\big|\mu\leq4]\\
+    &\leq P[\overline{X}\geq\overline{x}\big|\mu=4]\\
+    &=P[Z\geq\frac{\overline{x}-4}{0.2/\sqrt{50}}]\\
+    &=P[Z\geq z_{\alpha}]\\
+    &\overset{!}{=}0.05.
+}
+
+Since $z_{0.05}=1.645$, then
+\spl{
+    \frac{\overline{x}-4}{0.2/\sqrt{50}}&=1.645\\
+    \overline{x}&=4.047.
+}
+
+Thus the critical region is
+\spl{
+    \overline{X}\geq4.047.
+}
+
+\item
+\spl{
+    P&=P[\text{reject } H_0\big|H_1 \text{ true}]\\
+    &=P[Z\geq z_{\alpha=0.05}\big|\mu\geq4.5]\\
+    &\geq P[\frac{\overline{X}-4}{0.2/\sqrt{50}}\geq1.645\big|\mu=4.5]\\
+    &=P[\overline{X}\geq4.047\big|\mu=4.5]\\
+    &=1-\Phi(\frac{4.047-4.5}{0.2/\sqrt{50}})\\
+    &=1.
+}
+
+Hence, the power of this test is 1.
+
+\item
+Since $z_{1-0.97}=-1.885$, then $z\leq-1.885$, which means
+\spl{
+    \frac{\overline{X}-4.5}{0.2/\sqrt{n}}=\frac{(z_{0.05}\times0.2/\sqrt{n}+4)-4.5}{0.2/\sqrt{n}}&\leq-1.885,\\
+}
+which gives $n\geq1.99$.
+
+Hence, the sample size is at least 2.
+
+\item
+Since $\bar{x}=4.05>4.047$, we conclude that we can reject $H_0$ at $p<0.05$. 
+
+A 95\% confidence interval for $\mu$ is $4.05\pm\frac{z_{0.025}\cdot0.2}{\sqrt{50}}=4.05\pm0.06$
+}
+
+\section*{Exercise 5.3}
+\enum{
+\item
+\spl{
+    n=8,\quad \sigma=4,\quad \mu_0=100.
+}
+
+Thus the normalized statistic is
+\spl{
+    z=\frac{\bar{x}-100}{4/\sqrt{8}}=1.556
+}
+
+Since $z_{0.05}=1.645<1.556$, then we conclude that we reject $H_0$ at $p<0.05$ .
+
+\item
+\spl{
+    p&=P[\overline{X}\geq\bar{x}\big|\mu\leq100]\\
+    &\leq P[Z\geq1.556]\\
+    &=(0.0606+0.5904)/2\\
+    &=0.06.
+}
+
+\item
+\spl{
+    \text{Power}&=P[\text{reject }H_0\big|\mu=105]=P[Z\geq z_{0.05}\big|\mu=105]\\
+    &=P[\frac{\overline{X}-100}{4/\sqrt{8}}\geq z_{0.05}\big|\mu=105]\\
+    &=P[\overline{X}\geq102.3\big|\mu=105]\\
+    &=1-\Phi(\frac{102.3-105}{4/\sqrt{8}})\\
+    &=0.9706.
+}
+
+\item
+Since $z_{1-0.85}=-1.035$, then $z\leq-1.035$, which means
+\spl{
+    \frac{\overline{X}-105}{4/\sqrt{n}}=\frac{(z_{0.05}\times4/\sqrt{n}+100)-105}{4/\sqrt{n}}&\leq-1.035,\\
+}
+which gives $n\geq4.60$.
+
+Hence, the sample size is at least 5.
+
+\item
+If we construct a 95\% lower confidence bound for $\mu$, which is
+\spl{
+    \mu\geq\overline{X}-\frac{z_{0.05}\cdot4}{\sqrt{8}}=102.2-2.3=99.9.
+} 
+Hence, we can say $\mu\geq99.9$ with the confidence of 95\%. It's equivalent to the test in part(i). The results are both rejecting $H_0$.
+}
+
+\section*{Exercise 5.4}
+Denote that
+\spl{
+    G&=\sum_{k=1}^nX_k,\\
+    K&=\frac{2}{\beta}\sum_{k=1}^nX_k.
+}
+
+\spl{
+    F_K(y)&=P[K\leq y]=P[G\leq y\cdot\beta/2],\\
+    f_K(y)&=F_K'(y)=\frac{\beta}{2}f_G(y\cdot\frac{\beta}{2}).
+}
+
+Then when $y>0$,
+\spl{
+    f_K(y)&=\frac{\beta}{2}\frac{1}{\Gamma(n)\beta^n}\bigg(y\cdot\frac{\beta}{2}\bigg)^{n-1}e^{-\frac{y\beta}{\beta\cdot2}}\\
+    &=\bigg(\frac{\beta}{2}\bigg)^n\frac{1}{\Gamma(n)\beta^{n}}y^{n-1}e^{-\frac{y}{2}}\\
+    &=\frac{1}{\Gamma(n)2^{n}}y^{n-1}e^{-\frac{y}{2}}\\
+    &=\frac{1}{\Gamma(n'/2)2^{n'/2}}y^{n'/2-1}e^{-\frac{y}{2}}\\
+    &=f_{\chi_{n'}^2}(y).
+}
+
+where $n'=2n$.
+
+Hence, $K$ follows a chi-squared distribution with $2n$ degrees of freedom.
+
+For $H_0:\ \beta=\beta_0$,
+\spl{
+    \chi_{1-\alpha/2,2n}^2 &\leq K\leq\chi_{\alpha/2,2n}^2\\
+    \chi_{1-\alpha/2,2n}^2 &\leq \frac{2}{\beta}\sum_{k=1}^n \overline{X}_k\leq\chi_{\alpha/2,2n}^2\\
+    \frac{\chi_{1-\alpha/2,2n}^2}{2\sum_{k=1}^n \overline{X}_k} &\leq \frac{1}{\beta}\leq\frac{\chi_{\alpha/2,2n}^2}{2\sum_{k=1}^n \overline{X_k}}\\ 
+    \frac{2\sum_{k=1}^n \overline{X_k}}{\chi_{\alpha/2,2n}^2}&\leq\beta\leq\frac{2\sum_{k=1}^n \overline{X_k}}{\chi_{1-\alpha/2,2n}^2}.
+}
+
+Hence the critical region is 
+\spl{
+    \beta\leq\frac{2\sum_{k=1}^n \overline{X_k}}{\chi_{\alpha/2,2n}^2}\text{ or }\beta\geq\frac{2\sum_{k=1}^n \overline{X_k}}{\chi_{1-\alpha/2,2n}^2}.
+}
+
+For $H_0:\ \beta\leq\beta_0$,
+\spl{
+    K&\geq\chi_{\alpha,2n}^2\\
+    \beta&\leq\frac{2\sum_{k=1}^n \overline{X_k}}{\chi_{\alpha,2n}^2}.
+}
+
+Hence the critical region is 
+\spl{
+    \beta\geq\frac{2\sum_{k=1}^n \overline{X_k}}{\chi_{\alpha,2n}^2}.
+}

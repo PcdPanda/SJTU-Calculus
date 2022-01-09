@@ -1,0 +1,330 @@
+\section*{Exercise 1.1}
+The number of all the conditions that selecting 200 people from 2000 people is
+\[
+    N_1=\binom{2000}{120}.
+\]
+The number of the conditions that my friend and I are selected is equal to the number of conditions that selecting 118 people from 1998 people. That is
+\[
+    N_2=\binom{1998}{118}.
+\]
+Hence, the probability that my friend and I are selected is
+\[
+    P=\frac{\binom{1998}{118}}{\binom{2000}{120}}=\frac{1998!}{118!1880!}\div\frac{2000!}{120!1880!}\approx0.00357.
+\]
+
+\section*{Exercise 1.2}
+\enum{
+\item
+We denote that $C=B\backslash A$, which means $A\cap C=\varnothing$.
+
+Since $P[\bigcup_k A_k]=\sum_k P[A_k]$, then $P[B]=P[A\cup C]=P[A]+P[C]$.
+
+Since $P[C]\geq 0$, then $P[B]\geq P[A]$.
+
+Hence $P[A]\leq P[B]$.
+
+\item
+Since $A$ and $B$ are independent, then $P[A\cap B]=P[A]P[B]>0$.
+
+Hence $A\cap B \neq \varnothing$.
+
+Thus $A$ and $B$ are not mutually exclusive. 
+
+\item
+We denote that $C=A\cap B$, so that
+\[
+    (A\backslash C)\cap(C)\cap(B\backslash C)=\varnothing.
+\]
+
+Since $P[\bigcup_k A_k]=\sum_k P[A_k]$ for $\bigcap_k A_k=\varnothing$, then
+
+\spl{
+    P[A\cup B]&=P[(A\backslash C)\cup C\cup(B\backslash C)]\\
+    &=P[A\backslash C]+P[C]+P[B\backslash C]\\
+    &=P[A\backslash C]+P[C]+P[B\backslash C]\textbf{+P[C]-P[C]}\\
+    &=(P[A\backslash C]+P[C])+(P[B\backslash C]+P[C])-P[C]\\
+    &=P[A]+P[B]-P[C]\\
+    &=P[A]+P[B]-P[A\cap B].
+}
+}
+
+\section*{Exercise 1.3}
+\enum{
+\item
+No.
+
+Assume that the probability of "heads" for one toss is $p$, then
+\spl{
+    &P[\text{two heads}]=p^2=\frac{1}{3}\\
+    &P[\text{no head}]=(1-p)^2=\frac{1}{3}\\
+    &P[\text{one head}]=1-(1-p)^2-p^2=\frac{1}{3}\\
+}
+There's no such $p$ satisfying the equations.
+
+\item 
+No.
+
+Assume that the probabilities of "heads" are respectively $p_1$ and $p_2$, then
+\spl{
+    &P[\text{two heads}]=p_1p_2=\frac{1}{3}\\
+    &P[\text{no head}]=(1-p1)(1-p_2)=\frac{1}{3}\\
+    &P[\text{one head}]=p_1(1-p_2)+p_2(1-p_1)=\frac{1}{3}\\
+}
+We obtain $
+\left\{
+\begin{aligned}
+    p_1&=\frac{3+\sqrt{3}i}{6}\\ 
+    p_2&=\frac{3-\sqrt{3}i}{6}\\ 
+\end{aligned}
+\right.
+$
+
+Hence there's no real root for $p_1$ and $p_2$.
+}
+
+\section*{Exercise 1.4}
+\enum{
+\item 
+The probability that the selected participant has been asked the first question is $\frac{1}{2}$; the probability that the selected participant has \textbf{not} been asked the first question is $\frac{1}{2}$.
+
+We denote "claim to see the barn" as "B", "has been asked the first question" as "A".
+
+\[
+    P=P[B|A]P[A]+P[B|\urcorner A]P[\urcorner A]=0.17\times0.5+0.03\times0.5=0.1
+\]
+
+\item
+Since
+\spl{
+    P[A]&=0.5\neq0\\
+    P[B|A]&=0.17,\\
+}
+then
+\[
+    P[B]=0.1\neq P[B|A].
+\]
+Hence seeing the barn is not independent of being asked the first question.
+}
+
+\section*{Exercise 1.5}
+We suppose that the chips we can get are only from the market. Also, we suppose that the stolen chips are all sold on the market.
+
+Denote that "being defective" as "D" and "being stolen" as "S", so that
+\[
+    P[S|D]=\frac{P[D|S]P[S]}{P[D]}.
+\]
+Since the stolen chips are stolen before inspection, then 
+\begin{equation}\label{1}
+    P[D|S]=0.5.
+\end{equation}
+
+For the probability that the chip we get was stolen,
+\begin{equation}\label{2}
+    P[S]=0.01.
+\end{equation}
+
+Finally,
+\begin{equation}\label{3} 
+    P[D]=P[D|\urcorner S]P[\urcorner S]+P[D|S]P[S]=0.05\times0.99+0.5\times0.01=0.0545.
+\end{equation}
+
+According to Results \ref{1}, \ref{2} and \ref{3}, we obtain
+\[
+    P[S|D]=\frac{0.5\times0.01}{0.0545}=\frac{10}{109}\approx0.0917.
+\]
+
+\section*{Exercise 1.6}
+The prisoner is right.
+
+Denote that "A", "B", "C" means A, B, C is going to die, respectively; "B*" means B is told not to die by the warden.
+
+For example, B is told not to die. Then we obtain
+\spl{
+    P[A|B*]&=\frac{P[B*|A]P[A]}{P[B*|A]P[A]+P[B*|B]P[B]+P[B*|C]P[C]}\\ 
+    &=\frac{\frac{1}{2}\times\frac{1}{3}}{\frac{1}{2}\times\frac{1}{3}+0\times\frac{1}{3}+1\times\frac{1}{3}}=\frac{1}{3}.
+}
+That is $P[C|B*]=1-P[A|B*]-P[B|B*]=1-\frac{1}{3}-0=\frac{2}{3}$.
+
+In this case, the chance that A is going to die does not change, but the chance that C is going to die doubles.
+
+\section*{Exercise 1.7}
+\enum{
+\item 
+\[
+m_X(t)=E[e^{tX}]=\sum_{k=1}^n e^{tx_k}\frac{1}{n}=\frac{1}{n}\sum_{k=1}{n}e^{tx_k},\quad t\in\mathbb{R}.
+\]
+\item 
+\spl{
+    E[X]=\frac{\dd m_X(t)}{\dd t}\bigg|_{t=0}=\frac{1}{n}\sum_{k=1}^n x_ke^{tx_k}\bigg|_{t=0}=\frac{1}{n}\sum_{k=1}^n x_k.
+}
+\spl{
+    Var[X]&=E[X^2]-E[X]^2=\frac{\dd^2 m_X(t)}{\dd t^2}\bigg|_{t=0}-(\frac{\dd m_X(t)}{\dd t}\bigg|_{t=0})^2\\
+    &=\frac{1}{n}\sum_{k=1}^n x_k^2 e^{tx_k}\bigg|_{t=0}-(\frac{1}{n}\sum_{k=1}^n x_k)^2\\
+    &=\frac{1}{n}\sum_{k=1}^nx_k^2-(\frac{1}{n}\sum_{k=1}^n x_k)^2.
+}
+}
+
+\section*{Exercise 1.8}
+Since there exists some $\varepsilon$ such that $m_X(t)=m_Y(t)$ for all $t\in (-\varepsilon,\varepsilon)$, then their high order of derivatives exist and are the same. In other words,
+\[
+    \left\{
+    \begin{aligned}
+        &E[X]=\frac{\dd m_X(t)}{\dd t}\bigg|_{t=0}=\frac{\dd m_Y(t)}{\dd t}\bigg|_{t=0}=E[Y]\\
+        &E[X^2]=\frac{\dd^2 m_X(t)}{\dd t^2}\bigg|_{t=0}=\frac{\dd^2 m_Y(t)}{\dd t^2}\bigg|_{t=0}=E[Y^2]\\
+        &\vdots\\
+        &E[X^{n}]=\frac{\dd^n m_X(t)}{\dd t^n}\bigg|_{t=0}=\frac{\dd^n m_Y(t)}{\dd t^n}\bigg|_{t=0}=E[Y^{n}]\\
+    \end{aligned}
+    \right.
+\]
+
+We also know that
+\begin{equation}\label{eq1}
+    \left\{
+    \begin{aligned}
+        &E[X]=\sum_{x=0}^nxf_X(x)\\
+        &E[X^2]=\sum_{x=0}^nx^2f_X(x)\\
+        &\vdots\\
+        &E[X^n]=\sum_{x=0}^nx^nf_X(x)\\
+    \end{aligned}
+    \right.
+\end{equation}
+
+Similarly, for $(Y,f_Y)$,
+\begin{equation}\label{eq2}
+    \left\{
+    \begin{aligned}
+        &E[Y]=\sum_{x=0}^nxf_Y(x)\\
+        &E[Y^2]=\sum_{x=0}^nx^2f_Y(x)\\
+        &\vdots\\
+        &E[Y^n]=\sum_{x=0}^nx^nf_Y(x)\\
+    \end{aligned}
+    \right.
+\end{equation}
+
+We also know that
+\begin{equation}\label{eq3}
+\begin{split}
+    &f_X(0)+f_X(1)+\hdots+f_X(n)=1,\\
+    &f_Y(0)+f_Y(1)+\hdots+f_Y(n)=1.
+\end{split}
+\end{equation}
+
+To simplify the calculations, we denote that
+\[
+    \textbf{E}_{(n+1)\times1}=\left(
+    \begin{aligned}
+        &E[Y]\\
+        &E[Y^2]\\
+        &\vdots\\
+        &E[Y^n]\\
+        &1\\
+    \end{aligned}
+    \right)
+    =
+    \left(
+    \begin{aligned}
+        &E[X]\\
+        &E[X^2]\\
+        &\vdots\\
+        &E[X^n]\\
+        &1\\
+    \end{aligned}
+    \right),
+\]
+\[ 
+    \textbf{A}_{(n+1)\times(n+1)}=\left(
+    \begin{tabular}{cccc}
+        0 & 1 & $\hdots$ & n\\
+        $0^2$ & $1^2$ & $\hdots$ & $n^2$\\
+        &$\vdots$&&\\
+        $0^n$ & $1^n$ & $\hdots$ & $n^n$\\
+        1 & 1 & $\hdots$ & 1\\
+    \end{tabular}
+    \right),
+\]
+
+where $\textbf{det(A)}\neq0$.
+
+\[
+    \textbf{X}_{(n+1)\times1}=\left(
+    \begin{aligned}
+        &f_X(0)\\
+        &f_X(1)\\
+        &\vdots\\
+        &f_X(n-1)\\
+        &f_X(n)\\
+    \end{aligned}
+    \right),\quad
+    \textbf{Y}_{(n+1)\times1}=
+    \left(
+    \begin{aligned}
+        &f_Y(0)\\
+        &f_Y(1)\\
+        &\vdots\\
+        &f_Y(n-1)\\
+        &f_Y(n)\\
+    \end{aligned}
+    \right)
+\]
+
+Hence, equations \ref{eq1}, \ref{eq2}, \ref{eq3} can be presented as
+\begin{equation}\label{eq4}
+\begin{split}
+    &\textbf{A}\textbf{X}=\textbf{E}\\
+    &\textbf{A}\textbf{Y}=\textbf{E} 
+\end{split}
+\end{equation}
+
+We can tell that Eqs. \ref{eq4} are the same equation system. Since $\textbf{det(A)}\neq0$, we find that the equation system obtains only one solution.
+
+Thus $\textbf{X}=\textbf{Y}$; that is
+\begin{equation*}
+    \left\{
+    \begin{aligned}
+        &f_X(0)=f_Y(0)\\
+        &f_X(1)=f_Y(1)\\
+        &\vdots\\
+        &f_X(n)=f_Y(n)\\ 
+    \end{aligned}
+    \right.
+\end{equation*}
+
+In other words, $f_X(x)=f_Y(x)$ for $x=0,1,\hdots,n$.
+
+\section*{Exercise 1.9}
+\enum{
+\item 
+Applying the total probability formula, we obtain
+\[
+    P[Z=z]=\sum_{y=1}^zP[Z=z|Y=y]P[Y=y].
+\]
+Since X and Y are independent, then
+\[
+    P[Z=z|Y=y]=P[X=z-y|Y=y]=P[X=z-y].
+\]
+
+Thus
+\[
+    P[Z=z]=\sum_{y=1}^{z}P[X=z-y]P[Y=y]=\sum_{x+y=z}P[X=x]P[Y=y].
+\]
+
+\item 
+For a geometric random variable, $P_g[X=x]=(1-p)^{x-1}p$.
+
+For a pascal distribution with $r=2$, $$P_p[X=x]=\binom{x-1}{1}p^2(1-p)^{x-2}=(x-1)p^2(1-p)^{x-2}$$.
+
+The sum of two independent geometric random variables is
+\spl{
+    P[Z=X+Y]&=P[Z=z]\\
+    &=\sum_{x+y=z}P_g[X=x]P_g[Y=y]\\
+    &=\sum_{x+y=z}(1-p)^{x-1}p(1-p)^{y-1}p\\
+    &=\sum_{x+y=z}(1-p)^{x+y-2}p^2\\
+    &=\sum_{x+y=z}(1-p)^{z-2}p^2
+}
+Since $x=1,\hdots,z-1$ and $y=1,\hdots,z-1$, then there are $z-1$ terms of $(1-p)^{z-2}p^2$.
+\[
+    P[Z=z]=(z-1)(1-p)^{z-2}p^2=P_p[X=x].
+\]
+
+Hence, the sum of two independent geometric random variables follows a Pascal distribution with $r = 2$.
+}
